@@ -1,0 +1,61 @@
+#!/bin/csh
+
+if ($#argv == 0) then
+  echo "Paramètres manquants"
+  exit 1
+endif
+
+set lambdas = (0.0 0.1 0.3 0.5 0.7 0.8 0.9 0.95 1.0)
+
+foreach f ($argv)
+  
+  set f = `echo $f | sed -e 's/\.g$//'`
+
+  echo "Processing file $f"
+
+  set ymax = 4
+  set nb_values = `cat $f.g | wc -l`
+  if ($nb_values != 0) then
+    set nb_big_values = `sed -e 's/.* //' $f.g | grep -v '^0' | grep -v '^[ ]*$' | wc -l`
+
+    @ ratio = (100 * $nb_big_values) / $nb_values
+    if ($ratio < 20) then
+      set ymax = 1
+    endif
+  endif
+
+  #echo "set terminal epslatex color solid" > cmd
+  echo "set terminal epslatex color solid" > cmd
+  echo "set output '$f.eps'" >> cmd
+  echo "set size 1.6, 1.2" >> cmd
+  echo "set xlabel 'Iterations'" >> cmd
+  echo "set ylabel 'Erreur d''approximation'" >> cmd
+
+#  echo "set terminal pstricks" > cmd
+#  echo "set output '$f.tex'" >> cmd
+#  echo "set xtics 0,20,500" >> cmd
+
+  echo -n "plot [][0:$ymax] " >> cmd
+  set i = 0
+  foreach l ($lambdas)
+
+    if ($i != 0) then
+      echo -n ", " >> cmd
+    endif
+    
+    echo -n "'$f.g' index $i with lines title '$l'" >> cmd
+    @ i++
+  end
+
+  echo "" >> cmd
+  echo "set output" >> cmd
+
+  gnuplot cmd
+
+  # fix the .tex generated
+  cp $f.tex $f.tex~
+  sed -e "s#$f}#$f.eps}#" $f.tex~ > $f.tex
+  rm $f.tex~
+end
+
+

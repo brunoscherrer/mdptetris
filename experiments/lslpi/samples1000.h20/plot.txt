@@ -1,0 +1,38 @@
+set terminal epslatex color solid
+set output 'tetris_samples1000_h20_fp.eps'
+set size 0.76, 0.57
+#set xlabel 'Iterations'
+#set ylabel '\begin{sideways}{Average score of 100 games}\end{sideways}'
+set title 'Fixed point'
+set key spacing 0.8
+
+plot '0.0.m0' smooth unique title '$\lambda = 0.0$', '0.4.m0' smooth unique title '$\lambda = 0.4$', '0.7.m0' smooth unique title '$\lambda = 0.7$', '0.9.m0' smooth unique title '$\lambda = 0.9$', '1.0.m0' smooth unique title '$\lambda = 1.0$'
+
+set output
+
+
+
+
+
+set terminal epslatex color solid
+set output 'tetris_samples1000_h20_br.eps'
+set size 0.76, 0.57
+#set xlabel 'Iterations'
+#set ylabel '\begin{sideways}{Average score of 100 games}\end{sideways}'
+set title 'Bellman residual'
+#set title 'Average score of 100 Tetris games'
+set key spacing 0.8
+
+plot '0.0.m1' smooth unique title '$\lambda = 0.0$', '0.4.m1' smooth unique title '$\lambda = 0.4$', '0.7.m1' smooth unique title '$\lambda = 0.7$', '0.9.m1' smooth unique title '$\lambda = 0.9$', '1.0.m1' smooth unique title '$\lambda = 1.0$'
+
+set output
+
+
+
+
+
+
+
+
+
+

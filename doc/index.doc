@@ -1,0 +1,122 @@
+/**
+
+\mainpage MdpTetris documentation
+
+\section overview Overview
+
+MdpTetris is a Tetris simulator.
+The purpose of this project is to develop
+various Tetris-playing algorithms and compare their performances.
+This documentation will help you understand how to use
+the simulator to reproduce our experiments and
+implement your own algorithms.
+
+To know how to install MdpTetris and use the simulator, first have a look at this page.
+If you want to implement your own algorithm within the simulator, the \ref api "API" and \ref new_algo "this page" will help you but you should contact us before.
+
+\section installation Installation instructions
+
+\subsection requirements Requirements
+
+To compile MdpTetris, you need a standard Unix environment with of course a C compiler like gcc and the command make.
+You also need the GSL library (Gnu Scientific Library). Two libraries have to be installed: <tt>libgslcblas</tt> and <tt>libgsl</tt>. To do that, if you are using Ubuntu, you just have to install the package <tt>libgsl0-dev</tt>:
+
+\verbatim
+sudo apt-get install libgsl0-dev
+\endverbatim
+
+\subsection installation Compiling and installing
+
+To install MdpTetris, download the latest tarball release available <a href="https://gforge.inria.fr/projects/mdptetris">here</a> and save it into a directory, for example <tt>/home/you</tt>.
+Then, uncompress the files and compile the project with the standard Unix procedure:
+
+\verbatim
+$ tar xvzf mdptetris-1.2.tar.gz
+$ cd mdptetris-1.2
+$ ./configure
+$ make
+# make install
+\endverbatim
+
+The source files will be uncompressed into <tt>/home/you/mdptetris-1.2</tt>. The executable binaries will be installed into the default binary directory, usually something like <tt>/usr/local/bin</tt>.
+
+If you don't have root access, you can install the binaries into your home directory. To do this, type <tt>./configure --prefix=$HOME</tt> instead of just <tt>./configure</tt>. This will install the MdpTetris binaries into <tt>/home/you/bin</tt> instead of <tt>/usr/local/bin</tt>. But make sure <tt>/home/you/bin</tt> is in your <tt>$PATH</tt> environment variable.
+
+In both cases, you can uninstall MdpTetris with the command <tt>make uninstall</tt>.
+
+\section programs Programs
+
+If the installation succeeds, several binaries are installed. We can organize them in two kinds of programs: those which play some games of Tetris with an existing strategy (or policy), and those which compute a strategy.
+
+\subsection programs_playing Playing Tetris with an existing policy
+
+\li <strong>mdptetris</strong>: the main executable of the simulator. It shows an interactive menu to choose the game settings and let the computer play one or several Tetris games with a given strategy.
+
+\li <strong>mdptetris_play_games</strong>: a simple non-interactive program to let the computer play some games with the strategy defined in a \ref feature_files "feature file". This program is designed to be launched by a script to run some experiments.
+
+\li <strong>mdptetris_view_game</strong>: this tool generates a human-readable output of a game. This game must have been previously played with <tt>mdptetris</tt> and saved in a file.
+
+\subsection programs_computing_policy Computing a policy
+
+\li <strong>mdptetris_value_iteration</strong>: performs the standard Value Iteration algorithm on a reduced Tetris board (5*5). The optimal policy can be obtained this way for the reduced-size problem. For bigger boards such as the standard one (10*20), we must use approximative methods such as those presented below.
+
+\li <strong>mdptetris_lambda_pi</strong>: performs the approximate version of Lambda-Policy Iteration [Bertsekas and Tsitsiklis, 1996] and generates a \ref feature_files "feature file" representing the best policy obtained.
+
+\li <strong>mdptetris_cross_entropy</strong>: performs the noisy cross entropy method [Szita and Lorincz, 2006] and generates a \ref feature_files "feature file" representing the best policy obtained.
+
+\section feature_files The feature files
+
+A feature file defines a Tetris strategy (or policy) based on a linear sum of features. The features are some basis functions such as the wall height, the number of holes, etc. In a given state, all possible actions are tried and they are evaluated with this liner sum of features. The action with the best evaluation is then played.
+
+Thus, a feature file defines what features are used and the value of their weights.
+
+Let's consider an example of feature file. You will find this file in the <tt>features</tt> subdirectory of the MdpTetris package. It represents the very good Tetris strategy designed by <a href="http://colinfahey.com/tetris/tetris.html">Pierre Dellacherie</a> in 2003.
+
+\verbatim
+0
+-1
+6
+1 -1
+2 1
+3 -1
+4 -1
+5 -4
+6 -1
+\endverbatim
+
+The first two lines define some various settings about the policy but you don't really need to take care of them for now:
+\li an id representing the reward function (a reward function can be used with some reinforcement learning based policies),
+\li a value indicating how a game over state should be evaluated (-1: -infinite, 0: always zero ; 1: the value computing by the weighted sum of features). If you set this value to -1, the game will finish only if all actions lead to game over.
+
+The important part of a feature file is the remaining lines. The next line (i.e. line 3) is the number of features. Then, each line describes a feature and its weight. On a line, the first number is the id of a feature function and the second one is the corresponding weight. Here, we are using features #1, #2, #3, #4, #5 and #6. See the enumeration \ref FeatureID for their definition.
+For example, feature #5 corresponds to the number of holes in the wall, i.e. the number of empty cells recovered by a full cell. Any Tetris player know that the holes are really bad and should be avoided. Here, the holes have a big weight (-4) to penalize them strongly.
+
+\section first_run Your first run!
+
+To make you better understand how MdpTetris works, let's play some games with Dellacherie's policy.
+To do this, we will use the <tt>mdptetris_play_games</tt> tool. We could also use <tt>mdptetris</tt>, then we would have got an interactive menu and more options.
+
+Let's launch the command:
+
+\verbatim
+mdptetris_play_games
+Usage: mdptetris_play_games feature_file nb_games board_width board_height statistics_file [comments]
+\endverbatim
+
+Obviously, we missed the parameters. We want to play 10 games with Dellacheries' features (<tt>features/dellacherie_initial.dat</tt>) on a standard board (10 columns and 20 rows). The <tt>statistics_file</tt> parameter is the name of a file the command will generate. This file is the output of the command, it will contain the scores of all games and some statistical information about them, such as the mean score and the best score. The scores will be also be displayed on the standard output.
+The last parameter is optional, it is a comment to add at the beginning of the statistics file.
+So, here is our completed command line:
+
+\verbatim
+mdptetris_play_games features/dellacherie_initial.dat 10 10 20 stats
+\endverbatim
+
+You will first see a message indicating the seed of the random number generator. Then, a score is displayed each time a game is finished. But you have to be patient because Dellacherie's policy is really good, so the games are quite long. However, we have optimized the simulator, and with Dellacherie's policy it completes about 30 000 rows per second (with an Intel Dual Core 3.2 GHz), against 120 rows per second in the original implementation (with an Athlon 1600+).
+
+If you don't want to wait too long, you can also run Dellacherie's policy on a reduced board, such as 10*15:
+
+\verbatim
+mdptetris_play_games features/dellacherie_initial.dat 10 10 15 stats
+\endverbatim
+
+*/

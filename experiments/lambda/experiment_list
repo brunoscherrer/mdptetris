@@ -1,0 +1,46 @@
+exp1 : voir exp4
+
+*** Etude de l'influence de  evaluate_gameover_with_features (où l'on retrouve les courbes de bertsekas et Ioffe)
+
+exp2 : hauteur=10, lambda=0.0 -> 0.9, evaluate_gameover_with_features=V/F 
+exp3 : comme exp2 mais avec -avoid_gameover_actions
+
+exp4 : (hauteur=20) lambda=0.0 -> 0.9, evaluate_gameover_with_features=V/F 
+exp5 : comme exp4 mais avec -avoid_gameover_actions
+
+exp13 (pas fini) : comme exp4 mais fait tourner plus longtemps (200 itérations au lieu de 100)
+exp14 : comme exp13 mais sur une grille 19x10 au lieu de 20x10 
+
+
+*** Sur l'influence du Biais
+
+exp6 (pas fini!): lambda=0.9 -> 1.0
+
+exp7 (pas fini / pas relançable): exp sur un premier biais hauteur 10
+
+exp8 : voir exp9 (plus de valeur de lambda (pas de 0.1))
+exp9 : hauteur=10, lambda=0.0 -> 0.9, end_of_game_bias=0,1,2, -avoid_gameover_actions=V/F
+
+exp12 : refait l'expérience exp9 juste pour hauteur=20, lambda=0.9, biais=2 (pour comparer avec exp4 meme chose mais sans biais)
+
+
+*** Etude du pas d'apprentissage (0.1, 0.5, 10/10+t)
+
+exp10 :    
+    [  "-lambda",            ["0.0","0.3","0.5","0.7"], "l%s_" ], \
+    [  "",                   ["", "-avoid_gameover_actions"], ["na_","a_"] ], \
+    [  "-nb_iterations",     ["500"], "" ], \
+    [  "-height",            ["10"], "" ], \
+    [  "-stepsize",          ["100000 1000000", "500000 1000000","10 10"], ["s.1", "s.5", "s10_10"] \
+
+
+
+*** Etude de la longueur des parties Dellacherie en fonction de la taille
+
+exp11 : playgames
+ [  "", ["dellacherie_initial.dat"], ""], \
+    [  "", ["1000"], ""], \
+    [  "", ["4","5","6","7","8","9","10"], "%s_" ], \
+    [  "", ["4", "5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20"], "%s" ] \
+
+

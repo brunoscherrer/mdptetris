@@ -1,0 +1,38 @@
+set terminal epslatex
+set output 'tetris_samples1000_h20_fp.eps'
+set size 1.28,0.82
+#set xlabel 'Iterations'
+#set ylabel '\begin{sideways}{Average score of 100 games}\end{sideways}'
+set title 'Point fixe'
+set key spacing 0.8
+
+plot [0:50][0:2000] '0.0.m0' with linespoints lt 1 pt 6 title '$\lambda = 0.0$', '0.4.m0' with linespoints lt 1 pt 3 title '$\lambda = 0.4$', '0.7.m0' with linespoints lt 1 pt 2 title '$\lambda = 0.7$', '0.9.m0' with linespoints lt 1 pt 1 title '$\lambda = 0.9$', '1.0.m0' with lines lt 1 title '$\lambda = 1.0$'
+
+set output
+
+
+
+
+
+set terminal epslatex
+set output 'tetris_samples1000_h20_br.eps'
+set size 1.28,0.82
+#set xlabel 'Iterations'
+#set ylabel '\begin{sideways}{Average score of 100 games}\end{sideways}'
+set title 'R{\''e}sidu quadratique'
+#set title 'Average score of 100 Tetris games'
+set key spacing 0.8
+
+plot [0:50][0:2000] '0.0.m1' with linespoints lt 1 pt 6 title '$\lambda = 0.0$', '0.4.m1' with linespoints lt 1 pt 3 title '$\lambda = 0.4$', '0.7.m1' with linespoints lt 1 pt 2 title '$\lambda = 0.7$', '0.9.m1' with linespoints lt 1 pt 1 title '$\lambda = 0.9$', '1.0.m1' with lines lt 1 title '$\lambda = 1.0$'
+
+set output
+
+
+
+
+
+
+
+
+
+

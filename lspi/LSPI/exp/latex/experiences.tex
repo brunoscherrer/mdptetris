@@ -1,0 +1,195 @@
+\documentclass[a3paper,oneside,12pt,landscape]{article}
+%\input epsf %% at top of file
+
+%\usepackage[dvips]{graphicx}
+%\usepackage{url}
+%\usepackage{tabularx}
+%\usepackage{amsmath, amssymb}
+%\usepackage{theorem}
+%\usepackage{epsfig}
+%\usepackage{color}
+%\usepackage{algorithm}
+%\usepackage{algorithmic}
+%\usepackage{pstricks}
+\usepackage[dvips,landscape]{geometry}
+\usepackage[latin1]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage{lscape}
+\usepackage{fullpage}
+
+\setlength{\oddsidemargin}{-2cm}
+\setlength{\evensidemargin}{-2cm}
+\setlength{\textwidth}{40cm}
+%\setlength{\topmargin}{-1cm}
+%\setlength{\textheight}{28cm}
+
+
+\def\R{\mbox{I\hspace{-.15em}R}}
+
+\title{Least-Squares $\lambda$ Policy Iteration : Expériences}
+
+\author{Christophe Thiery \andauthor Bruno Scherrer}
+
+\begin{document}
+
+\titlepage
+
+
+
+
+\section{Fonctions de base polynômiales}
+
+\subsection{$\gamma = 0.9$ : 50 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/50ech/fp_vk.tex} & \input{../pol/50ech/br_vk.tex}  \\
+ \input{../pol/50ech/fp_vpi.tex} & \input{../pol/50ech/br_vpi.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.95$ : 50 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/50ech/fp_vk_g0.95.tex} & \input{../pol/50ech/br_vk_g0.95.tex}  \\
+ \input{../pol/50ech/fp_vpi_g0.95.tex} & \input{../pol/50ech/br_vpi_g0.95.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.9$ : 100 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/100ech/100it_fp_vk.tex} & \input{../pol/100ech/100it_br_vk.tex}  \\
+ \input{../pol/100ech/100it_fp_vpi.tex} & \input{../pol/100ech/100it_br_vpi.tex} 
+\end{tabular}
+
+%\subsection{$\gamma = 0.95$ : 100 échantillons}
+%\noindent
+%\begin{tabular}{c c}
+%  Point fixe & Résidu de Bellman \\
+% \input{../pol/100ech/fp_vk_g0.95.tex} & \input{../pol/100ech/br_vk_g0.95.tex}  \\
+% \input{../pol/100ech/fp_vpi_g0.95.tex} & \input{../pol/100ech/br_vpi_g0.95.tex} 
+%\end{tabular}
+
+\subsection{$\gamma = 0.9$ : 200 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/200ech/100it_fp_vk.tex} & \input{../pol/200ech/100it_br_vk.tex}  \\
+ \input{../pol/200ech/100it_fp_vpi.tex} & \input{../pol/200ech/100it_br_vpi.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.95$ : 200 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/200ech/fp_vk_g0.95.tex} & \input{../pol/200ech/br_vk_g0.95.tex}  \\
+ \input{../pol/200ech/fp_vpi_g0.95.tex} & \input{../pol/200ech/br_vpi_g0.95.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.99$ : 200 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/200ech/fp_vk_g0.99.tex} & \input{../pol/200ech/br_vk_g0.99.tex}  \\
+ \input{../pol/200ech/fp_vpi_g0.99.tex} & \input{../pol/200ech/br_vpi_g0.99.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.9$ : 500 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/500ech/fp_vk.tex} & \input{../pol/500ech/br_vk.tex}  \\
+ \input{../pol/500ech/fp_vpi.tex} & \input{../pol/500ech/br_vpi.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.99$ : 500 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../pol/500ech/fp_vk_g0.99.tex} & \\% \input{../pol/500ech/br_vk_g0.99.tex}  \\
+ \input{../pol/500ech/fp_vpi_g0.99.tex} & %\input{../pol/500ech/br_vpi_g0.99.tex} 
+\end{tabular}
+
+\section{Fonctions de base gaussiennes}
+
+\subsection{$\gamma = 0.9$ : 50 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/50ech/fp_vk.tex} & \input{../rbf/50ech/br_vk.tex}  \\
+ \input{../rbf/50ech/fp_vpi.tex} & \input{../rbf/50ech/br_vpi.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.95$ : 50 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/50ech/fp_vk_g0.95.tex} & \input{../rbf/50ech/br_vk_g0.95.tex}  \\
+ \input{../rbf/50ech/fp_vpi_g0.95.tex} & \input{../rbf/50ech/br_vpi_g0.95.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.9$ : 100 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/100ech/100it_fp_vk.tex} & \input{../rbf/100ech/100it_br_vk.tex}  \\
+ \input{../rbf/100ech/100it_fp_vpi.tex} & \input{../rbf/100ech/100it_br_vpi.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.95$ : 100 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/100ech/fp_vk_g0.95.tex} & \input{../rbf/100ech/br_vk_g0.95.tex}  \\
+ \input{../rbf/100ech/fp_vpi_g0.95.tex} & \input{../rbf/100ech/br_vpi_g0.95.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.9$ : 200 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/200ech/fp_vk_g0.9.tex} & \input{../rbf/200ech/br_vk_g0.9.tex}  \\
+ \input{../rbf/200ech/fp_vpi_g0.9.tex} & \input{../rbf/200ech/br_vpi_g0.9.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.95$ : 200 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/200ech/fp_vk_g0.95.tex} & \input{../rbf/200ech/br_vk_g0.95.tex}  \\
+ \input{../rbf/200ech/fp_vpi_g0.95.tex} & \input{../rbf/200ech/br_vpi_g0.95.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.99$ : 200 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/200ech/fp_vk_g0.99.tex} & \input{../rbf/200ech/br_vk_g0.99.tex}  \\
+ \input{../rbf/200ech/fp_vpi_g0.99.tex} & \input{../rbf/200ech/br_vpi_g0.99.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.9$ : 500 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/500ech/fp_vk_g0.9.tex} & \input{../rbf/500ech/br_vk_g0.9.tex}  \\
+ \input{../rbf/500ech/fp_vpi_g0.9.tex} & \input{../rbf/500ech/br_vpi_g0.9.tex} 
+\end{tabular}
+
+\subsection{$\gamma = 0.99$ : 500 échantillons}
+\noindent
+\begin{tabular}{c c}
+  Point fixe & Résidu de Bellman \\
+ \input{../rbf/500ech/fp_vk_g0.99.tex} & \input{../rbf/500ech/br_vk_g0.99.tex}  \\
+ \input{../rbf/500ech/fp_vpi_g0.99.tex} & \input{../rbf/500ech/br_vpi_g0.99.tex} 
+\end{tabular}
+
+
+
+
+
+
+\end{document}
+
+

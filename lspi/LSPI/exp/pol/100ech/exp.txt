@@ -1,0 +1,9 @@
+10 ensembles d'échantillons de 10 épisodes chacun, avec 100 échantillons par épisode.
+
+données générées : || V^\hat{pi} - V^* || (abrégé vpi dans les noms de fichiers) et || V_k - V* || (abrégé vk dans les noms de fichiers) en fonction des itérations.
+expérience répétée sur ces 10 ensembles d'échantillons pour plusieurs valeurs de lambda avec la méthode point fixe (fp) et résidu de bellman (br).
+Chaque courbe représente la moyenne des 10 exécutions, pour une valeur de lambda donnée.
+
+fichiers .g : données gnuplot
+fichiers .png : captures d'écrans des courbes générées par gnuplot
+

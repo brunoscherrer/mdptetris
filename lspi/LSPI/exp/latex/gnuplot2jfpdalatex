@@ -1,0 +1,99 @@
+#!/bin/csh
+
+if ($#argv == 0) then
+  echo "Paramètres manquants"
+  exit 1
+endif
+
+set lambdas =   (0.0 0.1 0.3 0.5 0.7 0.8 0.9 0.95 1.0)
+set displayed = (  1   0   0   1   1   0   0    1   1)
+set styles = ("linespoints pt 6 lt 1" "linespoints pt 3 lt 1" "linespoints pt 2 lt 1" "linespoints pt 1 lt 1" "lines lt 1")
+
+foreach f ($argv)
+  
+  set f = `echo $f | sed -e 's/\.g$//'`
+
+  echo "Processing file $f"
+
+  set ymax = 1.1
+
+  echo "set terminal epslatex" > cmd
+  echo "set output '$f.eps'" >> cmd
+  echo "set size 1.28, 0.82" >> cmd
+  echo "set key spacing 0.8" >> cmd
+
+#  echo "set style line 1 linetype 1 pointtype 1 linewidth 1" >> cmd
+#  echo "set style line 2 linetype 2 pointtype 2 linewidth 1" >> cmd
+#  echo "set style line 3 linetype 3 pointtype 3 linewidth 1.5" >> cmd
+#  echo "set style line 4 linetype 4 pointtype 4 linewidth 1.5" >> cmd
+#  echo "set style line 5 linetype 5 pointtype 5 linewidth 2" >> cmd
+
+#  echo "set xlabel 'Iterations'" >> cmd
+#  echo "set ylabel 'Erreur d''approximation'" >> cmd
+
+#  if ($f == "jfpda2010/rbf_200ech_fp_vk_g0.95") then    # very specific fix...
+#    echo "set key off" >> cmd
+#  endif
+
+  echo $f | grep '_fp_'
+  if ($status == 0) then
+    echo $f | grep 'g0\.9$'
+    if ($status == 0) then
+      echo $f | grep '_vpi_'
+      if ($status == 0) then
+        echo "set title '"'$'"\| Q^{\pi_k} - Q^* \|_\infty"'$'"'" >> cmd
+      else
+        echo "set title '"'$'"\| \widehat{Q}_k - Q^* \|_\infty"'$'"'" >> cmd
+      endif
+    else 
+      echo $f | grep '_vpi_'
+      if ($status == 0) then
+        echo "set title 'Oscillation des politiques'" >> cmd
+      else
+        echo "set title 'Point fixe'" >> cmd
+      endif
+    endif
+  else 
+    echo $f | grep '_br_'
+    if ($status == 0) then
+      echo "set title 'R{\''e}sidu quadratique'" >> cmd
+    endif
+  endif
+
+
+
+#  echo "set terminal pstricks" > cmd
+#  echo "set output '$f.tex'" >> cmd
+#  echo "set xtics 0,20,500" >> cmd
+
+  echo -n "plot [][0:$ymax] " >> cmd
+  set i = 0
+  set j = 1
+  foreach l ($lambdas)
+
+    @ ip1 = $i + 1
+    if ($displayed[$ip1] != 0) then
+
+      if ($j != 1) then
+        echo -n ", " >> cmd
+      endif
+    
+      echo -n "'$f.g' index $i with $styles[$j] title '"'$\lambda'" = $l"'$'"'" >> cmd
+      @ j++
+    endif
+    @ i++
+  end
+
+  echo "" >> cmd
+  echo "set output" >> cmd
+
+  gnuplot cmd
+
+  # fix the .tex generated
+  cp $f.tex $f.tex~
+  set basef = `echo $f | sed -e 's/jfpda2010\///'`
+  sed -e "s#$f}#$basef.eps}#" $f.tex~ > $f.tex
+  rm $f.tex~
+end
+
+
