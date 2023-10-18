@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.63)
-AC_INIT([mdptetris],[1.3],[christophe.thiery@loria.fr])
+AC_INIT([mdptetris],[1.3],[bruno.scherrer@inria.fr])
 AM_INIT_AUTOMAKE([-Wall foreign])
 AC_CONFIG_SRCDIR([src/tetris.c])
 AC_CONFIG_HEADER([config.h])
