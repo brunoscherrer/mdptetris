@@ -13,5 +13,7 @@ sudo apt install libgsl-dev libx11-dev freeglut3-dev zlib1g-dev
 # Installation
 
 ./configure
+
 make
+
 sudo make install
